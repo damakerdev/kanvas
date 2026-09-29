@@ -35,10 +35,17 @@ body {
 }
 
 .header h1{
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.5px;
     color: #181818;
+    padding: 4px 8px;
+}
+
+.header h1:hover {
+    background: #69696915;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .toolbar button {
