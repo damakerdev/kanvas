@@ -1,0 +1,15 @@
+{
+  "name": "kanvas",
+  "version": "1.0.0",
+  "description": "website builder",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "type": "module",
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

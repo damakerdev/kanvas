@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kanvas</h1>
+            <div class="toolbar">
+                <button disabled="disabled">new</button>
+                <button disabled="disabled">save</button>
+                <button disabled="disabled">undo</button>
+                <button disabled="disabled">redo</button>
+            </div>
+        </div>
+
+        <aside class="palette">
+            <h3>Components</h3>
+            <ul>
+                <li>Section</li>
+                <li>Heading</li>
+                <li>Paragraph</li>
+                <li>Button</li>
+                <li>Image</li>
+                <li>Card</li>
+            </ul>
+        </aside>
+
+        <main class="canvas-container">
+            <div class="canvas">
+                <p>drag components here or click to add them</p>
+            </div>
+        </main> 
+
+        <aside class="inspector">
+            <h3>inspector window</h3>
+            <p>select an element to edit</p>
+        </aside>
+
+        <footer class="footer">
+            <span id="version">Kanvas v0.1.0</span>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
