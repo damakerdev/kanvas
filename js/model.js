@@ -22,7 +22,7 @@ export function generateId(project, type){
     }
     project.counters[type]++;
     return `${type}-${project.counters[type]}`;
-    // heading-1, yadayada-9
+    // heading-1, yadayada-9 counts
 }
 
 export function addNode(project, parentId, type, idx=null){

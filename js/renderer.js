@@ -1,4 +1,4 @@
-export function renderNode(node)
+export function renderNode(node,selectedId)
 {
     let elem;
     if(node.type==='section'){
@@ -22,9 +22,16 @@ export function renderNode(node)
         }
     }
 
+    if(node.id===selectedId){
+        elem.style.outline="2px solid #5b5bf0";
+        elem.style.outlineOffset="2px";
+    } else {
+        elem.style.outline="none";
+    }
+
     if(node.children && node.children.length>0){
         for(const child of node.children){
-            const rendered=renderNode(child);
+            const rendered=renderNode(child, selectedId);
             elem.appendChild(rendered);
         }
     }

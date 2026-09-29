@@ -15,11 +15,27 @@ function renderApp(state){
     }
 
     for(const child of rootPage.children){
-        const elem=renderNode(child)
+        const elem=renderNode(child, state.selectedId)
         canvasElem.appendChild(elem)
     }
 }
 
+canvasElem.addEventListener('click',(e)=>{
+    const nodeElem=e.target.closest(`[data-node-id]`);
+
+    if(nodeElem){
+        const nodeId=nodeElem.dataset.nodeId;
+        store.dispatch({
+            type: 'SELECT_NODE',
+            payload:{id: nodeId}
+        })
+    } else {
+        store.dispatch({ 
+            type: 'SELECT_NODE', 
+            payload: {id:null}
+        })
+    }
+})
 
 store.subscribe((state)=>{
     // console.log("state updated:",state)
