@@ -35,6 +35,7 @@ export function addNode(project, parentId, type, idx=null){
     const compoDefn=COMPONENTS[type];
     if(!compoDefn){
         console.error("unknown component type: ",type);
+        alert(`ooopss! ${type} is coming in the next version! :P`)
         return project
     }
 
