@@ -146,12 +146,6 @@ body {
     margin-top:8px;
 }
 
-.inspector input:focus {
-    outline: none;
-    border-color: #4d4de0;
-    box-shadow: 0 0 0 2px rgba(91, 91, 240, 0.204);
-}
-
 .canvas p{
     color: #8c8c9a;
     font-size: 14px;
@@ -165,6 +159,66 @@ body {
     color: #6b6b76;
 }
 
+.inspector-headr {
+    font-size:12px; 
+    letter-spacing:0.5px;
+    color: #6b6b76;
+    margin-bottom:8px;
+    text-transform:uppercase;
+}
+
+.inspector-selected {
+    font-size: 13px;
+    font-weight: 500;
+    display: block;
+}
+
+.inspector-selected span {
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.inspector-text-label {
+    font-size: 13px; 
+    font-weight:500; 
+    display: block;
+    margin-bottom:4px; 
+    margin-top:8px;
+}
+#inspector-content-input {
+    width:100%; 
+    padding: 6px 12px; 
+    border: 1px solid #8888887d;
+    border-radius:6px; 
+    font-size: 13px; 
+    outline: none;
+    color: #000000d7;
+}
+
+#inspector-delete-btn {
+    margin-top:10px; 
+    width:100%; 
+    background-color: #fff;
+    border: 1px solid #e5484d;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #e5484d;
+    outline: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+#inspector-delete-btn:hover {
+    background-color: #e5484d !important;
+    color: #fff !important;
+}
+
+.inspector-properties {
+    flex:1;
+    overflow-y:auto;
+}
+
 .footer {
     grid-column: 1/-1;
     background-color: #fff;
@@ -175,3 +229,4 @@ body {
     font-size: 13px;
     color: #6b6b76;
 }
+

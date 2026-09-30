@@ -63,3 +63,21 @@ export function findNode(node, id){
     return null;
 }
 
+export function deleteNote(proj,id){
+    const newProj=structuredClone(proj)
+    function removeproj(container){
+        if(!container.children) return false;
+        const idx=container.children.findIndex(child=>child.id===id)
+        if(idx!==-1){
+            container.children.splice(idx,1)
+            return true
+        }
+        for(const child of container.children){
+            if(removeproj(child)) {
+                return true;
+            }
+        }
+    }
+    removeproj(newProj.page);
+    return newProj;
+}

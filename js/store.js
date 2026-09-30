@@ -1,4 +1,4 @@
-import { createProj, addNode, findNode } from "./model.js";
+import { createProj, addNode, findNode, deleteNote } from "./model.js";
 
 export function createStore(){
     let state= {
@@ -31,6 +31,13 @@ export function createStore(){
                         target.content=content;
                     }
                     state.project=projcopy;
+                    break;
+                case 'DELETE_NODE':
+                    const deleteId=action.payload.id;
+                    state.project=deleteNote(state.project,deleteId)
+                    if(state.selectedId===deleteId){
+                        state.selectedId=null;
+                    }
                     break;
                 default:
                     console.warn("unknown action type: ",action.type)

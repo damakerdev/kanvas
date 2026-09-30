@@ -31,30 +31,31 @@ function renderInspector(state) {
     let pHtml='';
     if(!selectedNode) {
         // return;
-        pHtml='<p style="font-size:13px;color: #6b6b76;">select an element to edit</p>';
+        pHtml='<p>select an element to edit</p>';
     } else {
         pHtml = `
-            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">Selected: <span style="font-weight:400;">${selectedNode.id}</span></label>
+            <label class="inspector-selected">Selected: <span>${selectedNode.id}</span></label>
             ${selectedNode.content!==undefined ?
                 `
-                    <label style="font-size: 13px; font-weight:500; display: block; margin-bottom:4px; margin-top:8px;">Text Content:</label>
-                    <input type="text" id="inspector-content-input" value="${selectedNode.content}" style="width:100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius:4px; font-size: 13px; outline: none;"/>
+                    <label class="inspector-text-label">Text Content:</label>
+                    <input type="text" id="inspector-content-input" value="${selectedNode.content}"/>
                 `
                 :
                 ``}
+                <button id="inspector-delete-btn">delete element</button>
             `;
 
     }
 
     inspectorElem.innerHTML= `
         <div class="inspector-section">
-            <h3 style="font-size:12px; letter-spacing:0.5px; color: #6b6b76; margin-bottom:8px; text-transform:uppercase;">inspector window</h3>
-            <div class="inspector-properties" style="flex:1;overflow-y:auto;">
+            <h3 class="inspector-headr">inspector window</h3>
+            <div class="inspector-properties">
                 ${pHtml}
             </div>
         </div>
         <div class="inspector-section">
-                <h3 style="font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color: #6b6b76; margin-bottom:8px;">Element Tree</h3>
+                <h3 class="inspector-headr">Element Tree</h3>
                 <div id="elem-tree-list">
                     ${renderElemTree(state.project.page,state.selectedId)}
                 </div>
@@ -91,6 +92,18 @@ function renderInspector(state) {
                     payload:{id:nodeId}
                 })
             }
+        })
+    }
+
+    const delBtn=inspectorElem.querySelector('#inspector-delete-btn')
+    if(delBtn){
+        delBtn.addEventListener('click',()=>{
+            store.dispatch({
+                type:'DELETE_NODE',
+                payload: {
+                  id: selectedNode.id
+                }
+            })
         })
     }
 
