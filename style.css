@@ -120,6 +120,30 @@ body {
     background-color: #fff;
     border-left: 1px solid #e3e3e8;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 16px;
+}
+
+.inspector-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e3e3e8;
+}
+
+.inspector-section:last-child{
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+#elem-tree-list {
+    flex:1;
+    overflow-y:auto;
+    margin-top:8px;
 }
 
 .inspector input:focus {

@@ -34,30 +34,30 @@ function renderInspector(state) {
         pHtml='<p style="font-size:13px;color: #6b6b76;">select an element to edit</p>';
     } else {
         pHtml = `
-            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">SELECTED: <span style="font-weight:400;">${selectedNode.id}</span></label>
+            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">Selected: <span style="font-weight:400;">${selectedNode.id}</span></label>
             ${selectedNode.content!==undefined ?
                 `
                     <label style="font-size: 13px; font-weight:500; display: block; margin-bottom:4px; margin-top:8px;">Text Content:</label>
-                    <input type="text" id="inspector-content-input" value="${selectedNode.content}" style="width:100%; padding: 6px 8px; border: 1px solid #828282; border-radius:4px; font-size: 13px; outline: none;"/>
+                    <input type="text" id="inspector-content-input" value="${selectedNode.content}" style="width:100%; padding: 6px 8px; border: 1px solid #cbd5e1; border-radius:4px; font-size: 13px; outline: none;"/>
                 `
                 :
-                `
-                    <p style="font-size:13px; color: #6b6b76; margin-top:8px;">This ${selectedNode.type} has no text content</p>
-                `}
+                ``}
             `;
 
     }
 
     inspectorElem.innerHTML= `
-        <h3>inspector window</h3>
-        <div class="inspector-properties" style="margin-top:12px; border-bottom: 1px solid #e3e3e8; padding-bottom:12px">
-            ${pHtml}
-        </div>
-        <div class="elem-tree" style="margin-top:12px;">
-            <h3 style="font-size:11px; text-transform:uppercase; color: #6b6b76; margin-bottom:8px;">Element Tree</h3>
-            <div id="elem-tree-list" style="display: flex; flex-direction: column; gap:2px; max-height:250px; overflow-y:auto;">
-                ${renderElemTree(state.project.page,state.selectedId)}
+        <div class="inspector-section">
+            <h3 style="font-size:12px; letter-spacing:0.5px; color: #6b6b76; margin-bottom:8px; text-transform:uppercase;">inspector window</h3>
+            <div class="inspector-properties" style="flex:1;overflow-y:auto;">
+                ${pHtml}
             </div>
+        </div>
+        <div class="inspector-section">
+                <h3 style="font-size:12px; letter-spacing:0.5px; text-transform:uppercase; color: #6b6b76; margin-bottom:8px;">Element Tree</h3>
+                <div id="elem-tree-list">
+                    ${renderElemTree(state.project.page,state.selectedId)}
+                </div>
         </div>
     `;
 
@@ -103,9 +103,9 @@ function renderElemTree(node, selectedId, depth=0){
     let html='';
     if(node.type!=='page'){
         const isSelected=node.id===selectedId
-        const tabgap=(depth===0)?5:(depth*20);
+        const tabgap=(depth===0)?8:(depth*24);
         html+=`
-            <div data-node-id="${node.id}" style="padding-left: ${tabgap}px; padding-top: 5px; padding-bottom: 5px; cursor: pointer;font-size:13px; display: flex; align-items: center; ${isSelected ? 'background-color: #2d2d2d16; font-weight: 500;' : 'color: #333;'}">
+            <div data-node-id="${node.id}" style="padding-left: ${tabgap}px; padding-top: 8px; padding-bottom: 8px; cursor: pointer;font-size:13px; display: flex; align-items: center; ${isSelected ? 'background-color: #2d2d2d16; font-weight: 500;' : 'color: #333;'}">
                 <span>
                     ${node.type}
                     <span style="color: #8c8c9a; font-size: 11px;">
