@@ -50,7 +50,7 @@ export function addNode(project, parentId, type, idx=null){
     return newProj;
 }
 
-function findNode(node, id){
+export function findNode(node, id){
     if(node.id===id) return node;
     if(!node.children){
         return null;
