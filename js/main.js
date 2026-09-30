@@ -8,6 +8,7 @@ window.kanvasStore=store;
 const canvasElem=document.querySelector('.canvas');
 const compoPalElem=document.querySelector('.palette');
 const inspectorElem=document.querySelector('.inspector');
+let typinginInspector=false;
 
 function renderApp(state){
     canvasElem.innerHTML='';
@@ -24,6 +25,8 @@ function renderApp(state){
 }
 
 function renderInspector(state) {
+    if(typinginInspector) return;
+
     if(!state.selectedId){
         inspectorElem.innerHTML=`
             <h3>inspector window</h3>
@@ -55,6 +58,12 @@ function renderInspector(state) {
 
     const inputElem=inspectorElem.querySelector('#inspector-content-input');
     if(inputElem){
+        inputElem.addEventListener('focus',()=>{
+            typinginInspector=true;
+        });
+        inputElem.addEventListener('blur',()=>{
+            typinginInspector=false;
+        })
         inputElem.addEventListener('input',(ev)=>{
             store.dispatch({
                 type: 'UPDATE_NODE_CONTENT',
@@ -64,8 +73,6 @@ function renderInspector(state) {
                 }
             })
         })
-        inputElem.focus();
-        inputElem.setSelectionRange(inputElem.value.length, inputElem.value.length);
     }
 
 }

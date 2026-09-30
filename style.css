@@ -122,9 +122,18 @@ body {
     padding: 20px;
 }
 
+.inspector input:focus {
+    outline: none;
+    border-color: #4d4de0;
+    box-shadow: 0 0 0 2px rgba(91, 91, 240, 0.204);
+}
+
 .canvas p{
     color: #8c8c9a;
     font-size: 14px;
+}
+.canvas [data-node-id]{
+    cursor:pointer;
 }
 
 .inspector p{
