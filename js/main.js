@@ -27,22 +27,14 @@ function renderApp(state){
 function renderInspector(state) {
     if(typinginInspector) return;
 
-    if(!state.selectedId){
-        inspectorElem.innerHTML=`
-            <h3>inspector window</h3>
-            <p>select an element to edit</p>        
-        `;
-        return;
-    }
-
-    const selectedNode=findNode(state.project.page,state.selectedId)
+    const selectedNode=state.selectedId? findNode(state.project.page,state.selectedId):null;
+    let pHtml='';
     if(!selectedNode) {
-        return;
-    }
-    inspectorElem.innerHTML = `
-        <h3>inspector window</h3>
-        <div style="margin-top:12px;">
-            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">Id: <span style="font-weight:400;">${selectedNode.id}</span></label>
+        // return;
+        pHtml='<p style="font-size:13px;color: #6b6b76;">select an element to edit</p>';
+    } else {
+        pHtml = `
+            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">SELECTED: <span style="font-weight:400;">${selectedNode.id}</span></label>
             ${selectedNode.content!==undefined ?
                 `
                     <label style="font-size: 13px; font-weight:500; display: block; margin-bottom:4px; margin-top:8px;">Text Content:</label>
@@ -51,8 +43,21 @@ function renderInspector(state) {
                 :
                 `
                     <p style="font-size:13px; color: #6b6b76; margin-top:8px;">This ${selectedNode.type} has no text content</p>
-                `
-            }
+                `}
+            `;
+
+    }
+
+    inspectorElem.innerHTML= `
+        <h3>inspector window</h3>
+        <div class="inspector-properties" style="margin-top:12px; border-bottom: 1px solid #e3e3e8; padding-bottom:12px">
+            ${pHtml}
+        </div>
+        <div class="elem-tree" style="margin-top:12px;">
+            <h3 style="font-size:11px; text-transform:uppercase; color: #6b6b76; margin-bottom:8px;">Element Tree</h3>
+            <div id="elem-tree-list" style="display: flex; flex-direction: column; gap:2px; max-height:250px; overflow-y:auto;">
+                ${renderElemTree(state.project.page,state.selectedId)}
+            </div>
         </div>
     `;
 
@@ -75,6 +80,47 @@ function renderInspector(state) {
         })
     }
 
+    const treeListElem=inspectorElem.querySelector('#elem-tree-list')
+    if(treeListElem){
+        treeListElem.addEventListener('click',(e)=>{
+            const treeitem=e.target.closest('[data-node-id]')
+            if(treeitem){
+                const nodeId=treeitem.dataset.nodeId;
+                store.dispatch({
+                    type:'SELECT_NODE',
+                    payload:{id:nodeId}
+                })
+            }
+        })
+    }
+
+}
+
+function renderElemTree(node, selectedId, depth=0){
+    if(!node){
+        return '';
+    }
+    let html='';
+    if(node.type!=='page'){
+        const isSelected=node.id===selectedId
+        const tabgap=(depth===0)?5:(depth*20);
+        html+=`
+            <div data-node-id="${node.id}" style="padding-left: ${tabgap}px; padding-top: 5px; padding-bottom: 5px; cursor: pointer;font-size:13px; display: flex; align-items: center; ${isSelected ? 'background-color: #2d2d2d16; font-weight: 500;' : 'color: #333;'}">
+                <span>
+                    ${node.type}
+                    <span style="color: #8c8c9a; font-size: 11px;">
+                        (${node.id})
+                    </span>
+                </span>
+            </div>
+        `
+    }
+    if(node.children && node.children.length>0){
+        for(const child of node.children){
+            html+=renderElemTree(child,selectedId,node.type==='page'?depth:depth+1)
+        }
+    }
+    return html;
 }
 
 canvasElem.addEventListener('click',(e)=>{
