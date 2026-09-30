@@ -7,6 +7,7 @@ window.kanvasStore=store;
 
 const canvasElem=document.querySelector('.canvas');
 const compoPalElem=document.querySelector('.palette');
+const inspectorElem=document.querySelector('.inspector');
 
 function renderApp(state){
     canvasElem.innerHTML='';
@@ -20,6 +21,53 @@ function renderApp(state){
         const elem=renderNode(child, state.selectedId)
         canvasElem.appendChild(elem)
     }
+}
+
+function renderInspector(state) {
+    if(!state.selectedId){
+        inspectorElem.innerHTML=`
+            <h3>inspector window</h3>
+            <p>select an element to edit</p>        
+        `;
+        return;
+    }
+
+    const selectedNode=findNode(state.project.page,state.selectedId)
+    if(!selectedNode) {
+        return;
+    }
+    inspectorElem.innerHTML = `
+        <h3>inspector window</h3>
+        <div style="margin-top:12px;">
+            <label style="font-size: 13px; font-weight:500; display:block; margin-bottom:4px;">Id: <span style="font-weight:400;">${selectedNode.id}</span></label>
+            ${selectedNode.content!==undefined ?
+                `
+                    <label style="font-size: 13px; font-weight:500; display: block; margin-bottom:4px; margin-top:8px;">Text Content:</label>
+                    <input type="text" id="inspector-content-input" value="${selectedNode.content}" style="width:100%; padding: 6px 8px; border: 1px solid #828282; border-radius:4px; font-size: 13px; outline: none;"/>
+                `
+                :
+                `
+                    <p style="font-size:13px; color: #6b6b76; margin-top:8px;">This ${selectedNode.type} has no text content</p>
+                `
+            }
+        </div>
+    `;
+
+    const inputElem=inspectorElem.querySelector('#inspector-content-input');
+    if(inputElem){
+        inputElem.addEventListener('input',(ev)=>{
+            store.dispatch({
+                type: 'UPDATE_NODE_CONTENT',
+                payload: {
+                    id: selectedNode.id,
+                    content: ev.target.value
+                }
+            })
+        })
+        inputElem.focus();
+        inputElem.setSelectionRange(inputElem.value.length, inputElem.value.length);
+    }
+
 }
 
 canvasElem.addEventListener('click',(e)=>{
@@ -77,8 +125,10 @@ compoPalElem.addEventListener('click',(e)=>{
 store.subscribe((state)=>{
     // console.log("state updated:",state)
     renderApp(state);
+    renderInspector(state);
 })
 
 renderApp(store.getState());
+renderInspector(store.getState());
 
 console.log("kanvas initialized!!")

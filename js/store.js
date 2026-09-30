@@ -1,4 +1,4 @@
-import { createProj, addNode } from "./model.js";
+import { createProj, addNode, findNode } from "./model.js";
 
 export function createStore(){
     let state= {
@@ -23,6 +23,15 @@ export function createStore(){
                 case 'SELECT_NODE':
                     state.selectedId=action.payload.id;
                     break
+                case 'UPDATE_NODE_CONTENT':
+                    const { id, content}=action.payload;
+                    const projcopy=structuredClone(state.project)
+                    const target=findNode(projcopy.page, id)
+                    if(target){
+                        target.content=content;
+                    }
+                    state.project=projcopy;
+                    break;
                 default:
                     console.warn("unknown action type: ",action.type)
                     return
